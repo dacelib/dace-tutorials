@@ -23,6 +23,7 @@
 
 cmake_minimum_required (VERSION 3.10)
 
+project(Examples1 CXX)
 
 # Use this mechanism to find DACE library installed separately in your sytem
 
@@ -40,9 +41,6 @@ find_package(dace 2.0.0 REQUIRED)
 #add_library(dace::dace ALIAS dace)
 #add_library(dace::dace_s ALIAS dace_s)
 
-
-
-project(Examples1 CXX)
 
 if(WIN32)
     get_target_property(DACEDLL dace::dace LOCATION)
