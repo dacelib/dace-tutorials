@@ -15,12 +15,34 @@
 # located in the same directory as the executable using it. You can use a
 # command such as the file(COPY ...) below to automatically copy the dace.dll
 # from the DACE package next to your executables.
+#
+# Alternatively, you can use the FetchContent mechanism to automatically clone
+# the DACE repository, and have it added to your builds. For forward compatibility,
+# you should still use the dace::dace and dace::dace_s libraries described above.
+#
 
-cmake_minimum_required (VERSION 2.8.4)
+cmake_minimum_required (VERSION 3.10)
 
-project(Examples2 CXX)
+
+# Use this mechanism to find DACE library installed separately in your sytem
 
 find_package(dace 2.0.0 REQUIRED)
+
+
+# Use this mechanism to automatically download and build DACE
+
+#include(FetchContent)
+#FetchContent_Declare(
+#  DACE
+#  GIT_REPOSITORY https://github.com/dacelib/dace.git
+#)
+#FetchContent_MakeAvailable(DACE)
+#add_library(dace::dace ALIAS dace)
+#add_library(dace::dace_s ALIAS dace_s)
+
+
+
+project(Examples2 CXX)
 
 if(WIN32)
     get_target_property(DACEDLL dace::dace LOCATION)
