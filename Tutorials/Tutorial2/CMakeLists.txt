@@ -25,10 +25,13 @@ cmake_minimum_required (VERSION 3.10)
 
 project(Examples2 CXX)
 
-# Use this mechanism to find DACE library installed separately in your sytem
+# Use this mechanism to find DACE library installed separately in your sytem (and copy to binary dir on Windows)
 
 find_package(dace 2.0.0 REQUIRED)
-
+if(WIN32)
+    get_target_property(DACEDLL dace::dace LOCATION)
+    file(COPY "${DACEDLL}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+endif(WIN32)
 
 # Use this mechanism to automatically download and build DACE
 
@@ -41,11 +44,6 @@ find_package(dace 2.0.0 REQUIRED)
 #add_library(dace::dace ALIAS dace)
 #add_library(dace::dace_s ALIAS dace_s)
 
-
-if(WIN32)
-    get_target_property(DACEDLL dace::dace LOCATION)
-    file(COPY "${DACEDLL}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-endif(WIN32)
 
 add_executable(1Basics-Ex 1Basics-Ex.cpp)
 target_link_libraries(1Basics-Ex PUBLIC dace::dace)
